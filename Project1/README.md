@@ -119,10 +119,11 @@ For larger 16-bit and multi-way circuits, representative test vectors covering d
 
 ### Example: NAND Verification
 
-```text
-a  b  | out
--------|----
-0  0  |  1
-0  1  |  1
-1  0  |  1
-1  1  |  0
+
+```markdown
+| a | b | out |
+|---|---|-----|
+| 0 | 0 |  1  |
+| 0 | 1 |  1  |
+| 1 | 0 |  1  |
+| 1 | 1 |  0  |
