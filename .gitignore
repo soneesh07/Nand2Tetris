@@ -1,0 +1,8 @@
+# Compiled simulation executables
+Project1/sim/*
+
+# Keep the sim folder
+!Project1/sim/.gitkeep
+
+# GTKWave waveforms
+*.vcd
