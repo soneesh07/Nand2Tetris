@@ -1,4 +1,3 @@
-````markdown
 # Nand2Tetris — Project 2: Boolean Arithmetic
 
 ## Overview
@@ -21,14 +20,12 @@ Nand2Tetris/
         │   ├── inc16.v
         │   └── alu.v
         │
-        ├── tb/
-        │   ├── halfadder_tb.v
-        │   ├── fulladder_tb.v
-        │   ├── add16_tb.v
-        │   ├── inc16_tb.v
-        │   └── alu_tb.v
-        │
-        └── sim/
+        └── tb/
+            ├── halfadder_tb.v
+            ├── fulladder_tb.v
+            ├── add16_tb.v
+            ├── inc16_tb.v
+            └── alu_tb.v
 ``` 
 
 ## Objectives
@@ -258,17 +255,17 @@ The six control bits allow the ALU to generate 18 different functions.
 
 `zr` is set when the ALU output is zero:
 
-[
+$$
 zr=1 \iff out=0
-]
+$$
 
 #### Negative Flag
 
 `ng` is determined by the most significant bit:
 
-[
+$$
 ng=out[15]
-]
+$$
 
 For 16-bit two's-complement numbers, a `1` in the MSB represents a negative value.
 
