@@ -117,13 +117,14 @@ For small combinational circuits, all possible input combinations were tested wh
 
 For larger 16-bit and multi-way circuits, representative test vectors covering different input and selection conditions were used.
 
+```markdown
 ### Example: NAND Verification
 
-
-```markdown
 | a | b | out |
 |---|---|-----|
-| 0 | 0 |  1  |
-| 0 | 1 |  1  |
-| 1 | 0 |  1  |
-| 1 | 1 |  0  |
+| 0 | 0 | 1 |
+| 0 | 1 | 1 |
+| 1 | 0 | 1 |
+| 1 | 1 | 0 |
+
+All four input combinations were verified through the testbench.
