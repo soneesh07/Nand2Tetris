@@ -25,7 +25,7 @@ endtask
 
 initial begin
 
-    $dumpfile("sim/nand.vcd");
+    $dumpfile("Project1/sim/nand.vcd");
     $dumpvars(0, tb_Nand);
 
     a = 0;
