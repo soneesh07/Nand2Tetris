@@ -5,4 +5,4 @@ Project1/sim/*
 !Project1/sim/.gitkeep
 
 # GTKWave waveforms
-*.vcd
+*.vcdProject2/sim/*
