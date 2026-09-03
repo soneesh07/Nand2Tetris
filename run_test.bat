@@ -1,89 +1,46 @@
 @echo off
-setlocal EnableDelayedExpansion
+setlocal
 
-if "%~2"=="" (
-    echo Usage: run_test.bat Project1 nand
-    echo        run_test.bat Project2 halfadder
-    exit /b 1
-)
+set PROJECT=%1
+set MODULE=%2
 
-set PROJECT=%~1
-set CHIP=%~2
-
-echo.
 echo ========================================
-echo Testing %PROJECT% - %CHIP%
+echo Testing %PROJECT% - %MODULE%
 echo ========================================
 echo.
+echo [%TIME%] Starting compilation...
+echo.
 
-if not exist "%PROJECT%\src" (
-    echo [ERROR] Source directory not found:
-    echo %PROJECT%\src
-    exit /b 1
-)
-
-if not exist "%PROJECT%\tb\%CHIP%_tb.v" (
-    echo [ERROR] Testbench not found:
-    echo %PROJECT%\tb\%CHIP%_tb.v
-    exit /b 1
-)
-
-if not exist "%PROJECT%\sim" (
-    mkdir "%PROJECT%\sim"
-)
-
-echo Compiling...
-
-set SOURCES=
-
-rem ------------------------------------------------
-rem Project 1
-rem ------------------------------------------------
-if /I "%PROJECT%"=="Project1" (
-    for %%F in ("%PROJECT%\src\*.v") do (
-        set SOURCES=!SOURCES! "%%F"
-    )
-)
-
-rem ------------------------------------------------
-rem Project 2
-rem Include Project 1 + Project 2 source files
-rem ------------------------------------------------
-if /I "%PROJECT%"=="Project2" (
-    for %%F in ("Project1\src\*.v") do (
-        set SOURCES=!SOURCES! "%%F"
-    )
-
-    for %%F in ("Project2\src\*.v") do (
-        set SOURCES=!SOURCES! "%%F"
-    )
-)
-
-iverilog -o "%PROJECT%\sim\%CHIP%_sim" %SOURCES% "%PROJECT%\tb\%CHIP%_tb.v"
+powershell -NoProfile -Command ^
+"$start=Get-Date; ^
+$p=Start-Process -FilePath 'iverilog' -ArgumentList '-o simulation.vvp Project1\src\*.v Project3\src\dff.v Project3\src\bit.v Project3\src\reg.v Project3\src\ram8.v Project3\src\ram64.v Project3\src\ram512.v Project3\src\ram4k.v Project3\src\ram16k.v Project3\tb\%MODULE%_tb.v' -NoNewWindow -PassThru -Wait; ^
+$e=(Get-Date)-$start; ^
+Write-Host ('Compilation elapsed time: {0:00}:{1:00}:{2:00}' -f [int]$e.TotalHours,$e.Minutes,$e.Seconds); ^
+exit $p.ExitCode"
 
 if errorlevel 1 (
     echo.
-    echo [ERROR] Compilation failed.
+    echo ========================================
+    echo COMPILATION FAILED
+    echo ========================================
     exit /b 1
 )
 
 echo.
-echo Compilation successful.
-echo Running simulation...
+echo [%TIME%] Compilation successful.
+echo.
+echo [%TIME%] Starting simulation...
 echo.
 
-vvp "%PROJECT%\sim\%CHIP%_sim"
+vvp simulation.vvp
 
-if errorlevel 1 (
-    echo.
-    echo [ERROR] Simulation failed.
-    exit /b 1
-)
-
+echo.
+echo [%TIME%] Simulation finished.
 echo.
 echo ========================================
 echo Test completed.
 echo ========================================
-echo.
+
+del simulation.vvp 2>nul
 
 endlocal
